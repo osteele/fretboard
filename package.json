@@ -6,9 +6,11 @@
   "license": "MIT",
   "keywords": [
     "music",
+    "music-theory",
     "chords",
     "guitar",
-    "diagrams"
+    "fretboard",
+    "chord-diagrams"
   ],
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   },
   "dependencies": {
     "coffee-script": "~1.6.3",
+    "schoen": "0.0.1",
     "underscore": "~1.5.2"
   },
   "devDependencies": {

@@ -2,17 +2,17 @@
 # Imports
 #
 
-ChordDiagram = require './chord_diagram'
-Layout = require './layout'
-Instruments = require './instruments'
-{chordFingerings} = require './fingerings'
+# console.info 'diagrams', require('schoen').diagrams
+ChordDiagram = require('schoen').diagrams.chord
+Instruments = require('schoen').instruments
+{chordFingerings} = require('schoen').fingerings
 
 {
   Chord
   Chords
   Scale
   Scales
-} = require('./theory')
+} = require('schoen').theory
 
 
 #

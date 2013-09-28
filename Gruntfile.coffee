@@ -20,7 +20,6 @@ module.exports = (grunt) ->
           debug: true
           debug$release: false
           fast: true
-          alias: []
 
     clean:
       dev: '<%= directories.dev %>'
@@ -90,15 +89,6 @@ module.exports = (grunt) ->
       scripts:
         files: ['app/**/*.coffee', 'lib/**/*.coffee']
         tasks: ['browserify']
-
-  # TODO use grunt.file.expandMapping ?
-  # TODO maybe aliasMap is now sufficient?
-  do ->
-    path = require 'path'
-    propertyName = 'browserify.app.options.alias'
-    files = grunt.file.expand('lib/*.coffee')
-    aliases = ("#{name}:./#{path.basename name, '.coffee'}" for name in files)
-    grunt.config.set propertyName, grunt.config.get(propertyName).concat(aliases)
 
   require('load-grunt-tasks')(grunt)
   grunt.loadTasks 'tasks'
