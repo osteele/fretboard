@@ -9,12 +9,7 @@ module.exports = (grunt) ->
 
     browserify:
       app:
-        files: {
-          '<%= directories.build %>/js/app.js': [
-            'app/**/*.coffee'
-            'lib/**/*.coffee'
-          ]
-        }
+        files: { '<%= directories.build %>/js/app.js': ['app/**/*.coffee', 'lib/**/*.coffee'] }
         options:
           transform: ['coffeeify']
           debug: true
@@ -29,13 +24,10 @@ module.exports = (grunt) ->
     coffeelint:
       app: ['lib/*.coffee']
       gruntfile: 'Gruntfile.coffee'
-      options:
-        max_line_length: { value: 120 }
+      options: max_line_length: { value: 120 }
 
     connect:
-      server:
-        options:
-          base: '<%= directories.build %>'
+      server: options: base: '<%= directories.build %>'
 
     copy:
       app:
@@ -46,8 +38,7 @@ module.exports = (grunt) ->
         filter: 'isFile'
 
     'gh-pages':
-      options:
-        base: '<%= directories.release %>'
+      options: base: '<%= directories.release %>'
       src: '**/*'
 
     jade:
@@ -87,11 +78,10 @@ module.exports = (grunt) ->
       jade: {}
       sass: {}
       scripts:
-        files: ['app/**/*.coffee', 'lib/**/*.coffee']
+        files: ['app/**/*.coffee', 'node_modules/schoen/dist/**/*.{js,coffee}']
         tasks: ['browserify']
 
   require('load-grunt-tasks')(grunt)
-  grunt.loadTasks 'tasks'
 
   grunt.registerTask 'build', ['clean:target', 'browserify', 'copy', 'jade', 'sass']
   grunt.registerTask 'build:release', ['contextualize:release', 'build']

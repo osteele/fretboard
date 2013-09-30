@@ -2,7 +2,6 @@
 # Imports
 #
 
-# console.info 'diagrams', require('schoen').diagrams
 ChordDiagram = require('schoen').diagrams.chord
 Instruments = require('schoen').instruments
 {chordFingerings} = require('schoen').fingerings

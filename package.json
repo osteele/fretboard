@@ -20,11 +20,11 @@
     "url": "http://github.com/osteele/fretboard/issues"
   },
   "dependencies": {
-    "coffee-script": "~1.6.3",
     "schoen": "0.0.1",
     "underscore": "~1.5.2"
   },
   "devDependencies": {
+    "coffee-script": "~1.6.3",
     "coffeeify": "~0.5.1",
     "grunt": "~0.4",
     "grunt-browserify": "~1.2.5",
