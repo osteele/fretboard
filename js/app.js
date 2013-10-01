@@ -1100,7 +1100,7 @@ _ref = require('./pitches'), IntervalNames = _ref.IntervalNames, getPitchName = 
 Chord = (function() {
   function Chord(_arg) {
     var degree, degrees, i, pc, pci, pitch, rootlessAbbr, rootlessFullName;
-    this.name = _arg.name, this.fullName = _arg.fullName, this.abbr = _arg.abbr, this.abbrs = _arg.abbrs, this.pitchClasses = _arg.pitchClasses, this.rootName = _arg.rootName, this.rootPitch = _arg.rootPitch;
+    this.name = _arg.name, this.fullName = _arg.fullName, this.abbr = _arg.abbr, this.abbrs = _arg.abbrs, this.pitchClasses = _arg.pitchClasses, this.root = _arg.root;
     if (this.abbrs == null) {
       this.abbrs = [this.abbr];
     }
@@ -1110,13 +1110,7 @@ Chord = (function() {
     if (this.abbr == null) {
       this.abbr = this.abbrs[0];
     }
-    if (this.rootPitch != null) {
-      this.rootName || (this.rootName = getPitchName(this.rootPitch));
-    }
-    if (this.rootName != null) {
-      if (this.rootPitch == null) {
-        this.rootPitch = this.rootName.match(/\d/) ? pitchFromScientificNotation(this.rootName) : parsePitchClass(this.rootName);
-      }
+    if (this.root != null) {
       this.pitches = (function() {
         var _i, _len, _ref1, _results;
         _ref1 = this.pitchClasses;
@@ -2338,7 +2332,7 @@ module.exports = {
 //@ sourceMappingURL=pitch_diagram.js.map
 */
 },{"./chord_diagram":5}],12:[function(require,module,exports){
-var AccidentalValues, FlatNoteNames, IntervalNames, LongIntervalNames, NoteNames, Pitches, SharpNoteNames, getPitchClassName, getPitchName, intervalClassDifference, midi2name, name2midi, normalizePitchClass, parsePitchClass, pitchFromScientificNotation, pitchToPitchClass;
+var AccidentalValues, FlatNoteNames, Interval, IntervalNames, LongIntervalNames, NoteNames, Pitch, PitchClass, Pitches, SharpNoteNames, getPitchClassName, getPitchName, intervalClassDifference, midi2name, name2midi, normalizePitchClass, parsePitchClass, pitchFromScientificNotation, pitchToPitchClass;
 
 SharpNoteNames = 'C C# D D# E F F# G G# A A# B'.replace(/#/g, '\u266F').split(/\s/);
 
@@ -2354,8 +2348,6 @@ AccidentalValues = {
   '𝄪': 2,
   '𝄫': -2
 };
-
-Pitches = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 IntervalNames = ['P1', 'm2', 'M2', 'm3', 'M3', 'P4', 'TT', 'P5', 'm6', 'M6', 'm7', 'M7', 'P8'];
 
@@ -2442,11 +2434,53 @@ name2midi = function(name) {
   return pitch;
 };
 
+Interval = (function() {
+  function Interval(_arg) {
+    this.number = _arg.number;
+  }
+
+  return Interval;
+
+})();
+
+Pitch = (function() {
+  function Pitch(_arg) {
+    this.number = _arg.number;
+  }
+
+  Pitch.fromScientificNotation = function(string) {
+    return new Pitch(pitchFromScientificNotation(this.rootName));
+  };
+
+  return Pitch;
+
+})();
+
+PitchClass = (function() {
+  function PitchClass(_arg) {
+    this.number = _arg.number;
+  }
+
+  PitchClass.fromScientificNotation = function(string) {
+    return new PitchClass(parsePitchClass(string));
+  };
+
+  return PitchClass;
+
+})();
+
+Pitches = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function(pitch) {
+  return new Pitch(pitch);
+});
+
 module.exports = {
   FlatNoteNames: FlatNoteNames,
+  Interval: Interval,
   IntervalNames: IntervalNames,
   LongIntervalNames: LongIntervalNames,
   NoteNames: NoteNames,
+  Pitch: Pitch,
+  PitchClass: PitchClass,
   Pitches: Pitches,
   SharpNoteNames: SharpNoteNames,
   getPitchClassName: getPitchClassName,
