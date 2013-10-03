@@ -6,12 +6,7 @@ ChordDiagram = require('schoen').diagrams.chord
 Instruments = require('schoen').instruments
 {chordFingerings} = require('schoen').fingerings
 
-{
-  Chord
-  Chords
-  Scale
-  Scales
-} = require('schoen').theory
+{Chord, Chords, Scale, Scales} = require('schoen')
 
 
 #
@@ -46,10 +41,10 @@ app.controller 'ChordTableCtrl', ($scope) ->
   $scope.tonics = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 
   $scope.getScaleChords = do ->
-    # The cache is necessary to prevent a digest iteration error
+    # The cache prevents a digest iteration error
     cache = {}
-    (scaleName, sevenths) ->
-      cache[[scaleName, sevenths]] or= Scale.find(scaleName).chords(sevenths: sevenths)
+    (scaleName, sevenths=false) ->
+      cache[[scaleName, sevenths]] ?= Scale.fromString(scaleName).chords(sevenths: sevenths)
 
 
 #
@@ -58,7 +53,7 @@ app.controller 'ChordTableCtrl', ($scope) ->
 
 app.controller 'ChordDetailsCtrl', ($scope, $routeParams) ->
   chordName = $routeParams.chordName.replace('&#9839;', '#')
-  $scope.chord = Chord.find(chordName)
+  $scope.chord = Chord.fromString(chordName)
   $scope.instrument = Instruments.Default
   $scope.fingerings = chordFingerings($scope.chord, $scope.instrument, allPositions: true)
 
